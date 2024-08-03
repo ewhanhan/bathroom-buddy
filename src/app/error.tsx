@@ -3,6 +3,7 @@
 import * as React from 'react'
 import { RiAlarmWarningFill } from 'react-icons/ri'
 import { Button } from '@/components/ui/button'
+import { errorLogger } from '@/lib/logger'
 
 export default function Error({
   error,
@@ -12,7 +13,7 @@ export default function Error({
   reset: () => void
 }) {
   React.useEffect(() => {
-    console.error(error)
+    errorLogger(error)
   }, [error])
 
   return (
@@ -25,9 +26,6 @@ export default function Error({
           <h1 className="mt-8 text-4xl font-bold text-gray-800 md:text-6xl">
             Oops, something went wrong!
           </h1>
-          <p className="mt-4 text-lg text-gray-600 md:text-xl">
-            We are experiencing some technical issues. Please try again later.
-          </p>
           <Button variant="outline" onClick={reset} className="mt-8">
             Try again
           </Button>
