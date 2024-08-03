@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { showLogger } from '@/constant/env'
 
 function formatLogComment(comment?: string): string {
