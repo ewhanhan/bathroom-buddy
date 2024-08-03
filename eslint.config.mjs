@@ -20,7 +20,7 @@ export default antfu({
     'arrow-body-style': 'off',
     'curly': ['error', 'all'],
     'func-names': 'error',
-    'no-console': 'off',
+    'no-console': 'warn',
     'no-param-reassign': 'off',
     'no-underscore-dangle': 'error',
     'no-unused-vars': 'error',
