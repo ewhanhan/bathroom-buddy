@@ -1,7 +1,6 @@
 import '@/styles/globals.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
-import Footer from '@/components/footer'
 import Header from '@/components/header'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -16,13 +15,10 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="flex size-full min-h-screen flex-col justify-between">
+        <main className=" flex h-screen w-screen flex-col antialiased">
           <Header />
-          <main className="mx-auto w-full max-w-3xl flex-auto p-4 sm:px-6 md:py-6">
-            {children}
-          </main>
-          <Footer />
-        </div>
+          {children}
+        </main>
       </body>
     </html>
   )

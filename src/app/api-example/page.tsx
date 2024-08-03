@@ -1,11 +1,11 @@
 'use client'
 import { useEffect, useState } from 'react'
-import CustomLink from '@/components/custom-link'
+import EnhancedLink from '@/components/custom-link'
 
 export default function Page() {
   const [data, setData] = useState()
   useEffect(() => {
-    ;(async () => {
+    (async () => {
       const res = await fetch('/api/protected')
       const json = await res.json()
       setData(json)
@@ -17,14 +17,14 @@ export default function Page() {
       <p>
         This page fetches data from an API
         {' '}
-        <CustomLink href="https://nextjs.org/docs/app/building-your-application/routing/route-handlers">
+        <EnhancedLink href="https://nextjs.org/docs/app/building-your-application/routing/route-handlers">
           Route Handler
-        </CustomLink>
+        </EnhancedLink>
         . The API is protected using the universal
         {' '}
-        <CustomLink href="https://nextjs.authjs.dev#auth">
+        <EnhancedLink href="https://nextjs.authjs.dev#auth">
           <code>auth()</code>
-        </CustomLink>
+        </EnhancedLink>
         {' '}
         method.
       </p>
