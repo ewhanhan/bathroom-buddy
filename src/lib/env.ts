@@ -18,6 +18,7 @@ const envVariables = z.object({
   AUTH_GOOGLE_SECRET: z.string(),
   DATABASE_URL: z.string().url(),
   DIRECT_URL: z.string().url(),
+  NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: z.string(),
 })
 
 envVariables.parse(process.env)
