@@ -6,7 +6,7 @@ interface CustomLinkProps extends React.LinkHTMLAttributes<HTMLAnchorElement> {
   href: string
 }
 
-function EnhancedLink({
+export function EnhancedLink({
   href,
   children,
   className,
@@ -39,5 +39,3 @@ function EnhancedLink({
     </Link>
   )
 }
-
-export default EnhancedLink

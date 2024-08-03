@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import type { NextRequest } from 'next/server'
 import { auth } from '@/lib/auth'
 
