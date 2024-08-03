@@ -1,5 +1,7 @@
 /* eslint-disable no-console */
-import { db } from '@/lib/prisma'
+import { PrismaClient } from '@prisma/client'
+
+const db = new PrismaClient()
 
 async function main() {
   console.log(`Start seeding ...`)
