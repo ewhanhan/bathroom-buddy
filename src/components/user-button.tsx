@@ -10,10 +10,13 @@ import {
 import { SignIn, SignOut } from './auth-components'
 import { auth } from '@/lib/auth'
 
-export default async function UserButton() {
+export async function UserButton() {
   const session = await auth()
-  if (!session?.user)
+
+  if (!session?.user) {
     return <SignIn />
+  }
+
   return (
     <div className="flex items-center gap-2">
       <span className="hidden text-sm sm:inline-flex">

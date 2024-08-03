@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
-import EnhancedLink from '@/components/custom-link'
+import { EnhancedLink } from '@/components/custom-link'
 
 export default function Page() {
   const [data, setData] = useState()
