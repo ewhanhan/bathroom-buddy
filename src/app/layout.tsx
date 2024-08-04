@@ -14,7 +14,7 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main className=" flex h-screen w-screen flex-col antialiased">
+        <main className="flex h-dvh w-screen flex-col antialiased">
           <Header />
           {children}
         </main>
