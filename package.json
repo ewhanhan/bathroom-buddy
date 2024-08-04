@@ -7,7 +7,7 @@
   "scripts": {
     "build": "next build",
     "start": "next start",
-    "build-stats": "cross-env ANALYZE=true npm run build",
+    "build-stats": "dotenv -e $npm_package_envFile -- cross-env ANALYZE=true pnpm run build",
     "check-types": "tsc --noEmit --pretty --incremental false",
     "clean": "rimraf .next out",
     "db-reset": "dotenv -e $npm_package_envFile -- prisma migrate dev reset",
