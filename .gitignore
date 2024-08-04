@@ -7,6 +7,21 @@
 
 # Database
 *.db
+query-engine*
+migration-engine*
+schema-engine*
+libquery_engine*
+libquery-engine*
+query_engine-windows.dll.node
+**/migrations/
+**/generated/
+
+*tmp.db
+dist/
+
+*.tsbuildinfo
+.prisma
+.pnpm-store
 
 # testing
 /coverage
