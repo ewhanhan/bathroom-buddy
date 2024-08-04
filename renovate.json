@@ -1,25 +1,38 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["config:base", "group:allNonMajor"],
-  "updatePinnedDependencies": false,
-  "stabilityDays": 3,
-  "separateMajorMinor": true,
-  "timezone": "America/Toronto",
-  "schedule": ["before 11am on Monday"],
-  "labels": ["dependencies"],
-  "prConcurrentLimit": 5,
-  "prHourlyLimit": 2,
+  "baseBranches": [
+    "main"
+  ],
   "dependencyDashboard": true,
+  "extends": [
+    "config:base",
+    "group:allNonMajor"
+  ],
   "ignorePaths": [
     "packages/deprecated/**"
   ],
-  "rangeStrategy": "bump",
-  "rebaseWhen": "conflicted",
+  "labels": [
+    "dependencies"
+  ],
   "packageRules": [
     {
-      "matchPackageNames": ["node"],
+      "enabled": false,
       "groupName": "node",
-      "enabled": false
+      "matchPackageNames": [
+        "node"
+      ]
     }
-  ]
+  ],
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 2,
+  "rangeStrategy": "bump",
+  "rebaseWhen": "conflicted",
+  "schedule": [
+    "before 11am on Monday"
+  ],
+  "semanticCommits": "enabled",
+  "separateMajorMinor": true,
+  "stabilityDays": 3,
+  "timezone": "America/Toronto",
+  "updatePinnedDependencies": false
 }
