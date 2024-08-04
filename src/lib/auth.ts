@@ -9,17 +9,17 @@ import { db } from './prisma'
 import { isLocal } from '@/constant/env'
 
 const config = {
-  theme: { logo: 'https://authjs.dev/img/logo-sm.png' },
   adapter: PrismaAdapter(db),
+  debug: isLocal,
   providers: [
     GitHub,
     Google,
   ],
-  debug: isLocal,
   secret: process.env.NEXTAUTH_SECRET,
+  theme: { logo: 'https://authjs.dev/img/logo-sm.png' },
 } satisfies NextAuthConfig
 
-export const { handlers, auth, signIn, signOut } = NextAuth(config)
+export const { auth, handlers, signIn, signOut } = NextAuth(config)
 
 declare module 'next-auth' {
   interface Session extends DefaultSession {

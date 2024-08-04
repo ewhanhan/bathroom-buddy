@@ -7,9 +7,9 @@ interface CustomLinkProps extends React.LinkHTMLAttributes<HTMLAnchorElement> {
 }
 
 export function EnhancedLink({
-  href,
   children,
   className,
+  href,
   ...rest
 }: CustomLinkProps) {
   const isInternalLink = href.startsWith('/')

@@ -12,13 +12,13 @@ import { UNION_STATION } from '@/constant/map'
 
 const geolocationOptions: PositionOptions = {
   enableHighAccuracy: true,
-  timeout: 5000,
   maximumAge: 0,
+  timeout: 5000,
 } satisfies PositionOptions
 
 export function ClientMap() {
   const { permissionState } = useGeolocationPermission()
-  const { loading: isLoadingGeolocation, latitude, longitude } = useGeolocation(geolocationOptions)
+  const { latitude, loading: isLoadingGeolocation, longitude } = useGeolocation(geolocationOptions)
   const [userLocation, setUserLocation] = useState<google.maps.LatLngLiteral>({
     lat: latitude ?? UNION_STATION.lat,
     lng: longitude ?? UNION_STATION.lng,

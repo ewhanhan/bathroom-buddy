@@ -35,5 +35,5 @@ export function useGeolocationPermission() {
     }
   }, [checkPermission])
 
-  return { permissionState, checkPermission } as const
+  return { checkPermission, permissionState } as const
 }

@@ -8,9 +8,9 @@ function stripContentEncoding(result: Response) {
   responseHeaders.delete('content-encoding')
 
   return new Response(result.body, {
+    headers: responseHeaders,
     status: result.status,
     statusText: result.statusText,
-    headers: responseHeaders,
   })
 }
 
@@ -25,7 +25,7 @@ async function handler(request: NextRequest) {
     ?? 'https://authjs-third-party-backend.authjs.dev'
 
   const url = request.nextUrl.href.replace(request.nextUrl.origin, backendUrl)
-  const result = await fetch(url, { headers, body: request.body })
+  const result = await fetch(url, { body: request.body, headers })
 
   return stripContentEncoding(result)
 }

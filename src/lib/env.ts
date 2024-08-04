@@ -6,17 +6,17 @@
 import { z } from 'zod'
 
 const envVariables = z.object({
-  NODE_ENV: z
-    .enum(['development', 'test', 'production'])
-    .default('development'),
-  NEXTAUTH_URL: z.string().url(),
-  NEXTAUTH_SECRET: z.string(),
-  NEXT_PUBLIC_SHOW_LOGGER: z.enum(['true', 'false']).optional(),
   AUTH_GITHUB_ID: z.string(),
   AUTH_GITHUB_SECRET: z.string(),
   AUTH_GOOGLE_ID: z.string(),
   AUTH_GOOGLE_SECRET: z.string(),
   NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: z.string(),
+  NEXT_PUBLIC_SHOW_LOGGER: z.enum(['true', 'false']).optional(),
+  NEXTAUTH_SECRET: z.string(),
+  NEXTAUTH_URL: z.string().url(),
+  NODE_ENV: z
+    .enum(['development', 'test', 'production'])
+    .default('development'),
 })
 
 envVariables.parse(process.env)
