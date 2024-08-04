@@ -16,11 +16,13 @@
   ],
   "packageRules": [
     {
-      "enabled": false,
       "groupName": "node",
-      "matchPackageNames": [
-        "node"
-      ]
+      "matchPackageNames": ["node"],
+      "allowedVersions": "20.x"
+    },
+    {
+      "matchPackageNames": ["eslint"],
+      "allowedVersions": "8.x"
     }
   ],
   "prConcurrentLimit": 5,
