@@ -16,8 +16,6 @@ const envVariables = z.object({
   AUTH_GITHUB_SECRET: z.string(),
   AUTH_GOOGLE_ID: z.string(),
   AUTH_GOOGLE_SECRET: z.string(),
-  DATABASE_URL: z.string().url(),
-  DIRECT_URL: z.string().url(),
   NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: z.string(),
 })
 
