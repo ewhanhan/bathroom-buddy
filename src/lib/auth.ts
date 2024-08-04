@@ -2,7 +2,7 @@ import NextAuth from 'next-auth'
 import 'next-auth/jwt'
 import { PrismaAdapter } from '@auth/prisma-adapter'
 import GitHub from 'next-auth/providers/github'
-import Google from 'next-auth/providers/Google'
+import Google from 'next-auth/providers/google'
 
 import type { DefaultSession, NextAuthConfig } from 'next-auth'
 import { db } from './prisma'
