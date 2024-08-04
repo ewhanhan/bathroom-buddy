@@ -41,3 +41,11 @@ export function LoadingSpinner({ size = 24, color = 'text-gray-900', className =
     </div>
   )
 }
+
+export function FullPageLoadingSpinner() {
+  return (
+    <section role="status" aria-live="polite" className="flex h-full items-center justify-center">
+      <LoadingSpinner size={64} />
+    </section>
+  )
+}
