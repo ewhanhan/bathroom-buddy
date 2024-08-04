@@ -1,6 +1,9 @@
-/* eslint-disable ts/no-require-imports */
-/** @type {import('tailwindcss').Config} */
-module.exports = {
+import tailwindcssForms from '@tailwindcss/forms'
+import type { Config as tailwindConfig } from 'tailwindcss'
+import tailwindcssAnimate from 'tailwindcss-animate'
+
+// eslint-disable-next-line import/no-default-export
+export default {
   darkMode: 'selector',
   content: [
     './pages/**/*.{ts,tsx}',
@@ -59,12 +62,12 @@ module.exports = {
       },
       keyframes: {
         'accordion-down': {
-          from: { height: 0 },
+          from: { height: '0' },
           to: { height: 'var(--radix-accordion-content-height)' },
         },
         'accordion-up': {
           from: { height: 'var(--radix-accordion-content-height)' },
-          to: { height: 0 },
+          to: { height: '0' },
         },
       },
       animation: {
@@ -74,7 +77,7 @@ module.exports = {
     },
   },
   plugins: [
-    require('tailwindcss-animate'),
-    require('@tailwindcss/forms'),
+    tailwindcssAnimate,
+    tailwindcssForms,
   ],
-}
+} satisfies tailwindConfig
