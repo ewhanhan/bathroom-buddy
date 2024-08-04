@@ -4,7 +4,7 @@ import { useGeolocation } from '@uidotdev/usehooks'
 import { ControlPosition, APIProvider as GoogleMapsProvider, Map, MapControl, Marker } from '@vis.gl/react-google-maps'
 import { useEffect, useState } from 'react'
 import { RiCamera2Fill } from 'react-icons/ri'
-import { LoadingSpinner } from './loading-spinner'
+import { FullPageLoadingSpinner } from './loading-spinner'
 import { Button } from './ui/button'
 import { logger } from '@/lib/logger'
 import { useGeolocationPermission } from '@/hooks/useGeolocationPermission'
@@ -38,9 +38,7 @@ export function ClientMap() {
 
   if (isLoadingGeolocation) {
     return (
-      <div className="flex h-full items-center justify-center">
-        <LoadingSpinner size={64} />
-      </div>
+      <FullPageLoadingSpinner />
     )
   }
 
