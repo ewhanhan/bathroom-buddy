@@ -1,9 +1,11 @@
 import { ExternalLink } from 'lucide-react'
-import Link from 'next/link'
+import Link, { type LinkProps } from 'next/link'
 import { cn } from '@/lib/utils'
 
-interface CustomLinkProps extends React.LinkHTMLAttributes<HTMLAnchorElement> {
+interface CustomLinkProps extends LinkProps {
+  children: React.ReactNode
   href: string
+  className?: string
 }
 
 export function EnhancedLink({
