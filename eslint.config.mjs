@@ -1,5 +1,14 @@
-import antfu from '@antfu/eslint-config'
+import path from 'node:path'
+import fs from 'node:fs'
+import { fileURLToPath } from 'node:url'
 import { FlatCompat } from '@eslint/eslintrc'
+import antfu from '@antfu/eslint-config'
+
+const filename = fileURLToPath(import.meta.url)
+const dirname = path.dirname(filename)
+const gitignorePath = path.resolve(dirname, '.gitignore')
+
+const gitignoreContent = fs.readFileSync(gitignorePath, 'utf8')
 
 const compat = new FlatCompat()
 
@@ -16,7 +25,6 @@ export default antfu({
         variables: true,
       },
     ],
-
     'arrow-body-style': 'off',
     'curly': ['error', 'all'],
     'func-names': 'error',
@@ -31,13 +39,13 @@ export default antfu({
     'react-hooks/rules-of-hooks': 'error',
     'import/no-default-export': 'error',
   },
-
   typescript: {
     parserOptions: {
       project: './tsconfig.json',
     },
   },
 }, ...compat.config({
+  ignorePatterns: gitignoreContent.split('\n').filter(Boolean),
   overrides: [
     // Next.js needs default exports for pages and API points
     {
