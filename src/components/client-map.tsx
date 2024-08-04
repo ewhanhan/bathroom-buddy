@@ -70,7 +70,7 @@ export function ClientMap() {
             <div className="mb-5 mr-3 flex">
               <Button
                 aria-label="Open menu"
-                className="bg-gray-200 transition-colors duration-200 hover:bg-gray-300 active:bg-gray-400"
+                className="bg-white transition-colors duration-200 hover:bg-gray-300 active:bg-gray-400"
                 size="icon"
                 variant="ghost"
               >
