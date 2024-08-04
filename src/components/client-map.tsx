@@ -29,13 +29,11 @@ export function ClientMap() {
       return
     }
 
-    if (latitude !== null && longitude !== null) {
-      logger({ latitude, longitude }, 'Geolocation updated')
-      setUserLocation({
-        lat: latitude,
-        lng: longitude,
-      })
-    }
+    logger({ latitude, longitude }, 'Geolocation updated')
+    setUserLocation({
+      lat: latitude,
+      lng: longitude,
+    })
   }, [isLoadingGeolocation, latitude, longitude, permissionState])
 
   if (isLoadingGeolocation) {
