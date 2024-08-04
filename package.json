@@ -7,26 +7,34 @@
   "scripts": {
     "build": "next build",
     "start": "next start",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build",
     "build-stats": "dotenv -e $npm_package_envFile -- cross-env ANALYZE=true pnpm run build",
-    "check-types": "tsc --noEmit --pretty --incremental false",
-    "clean": "rimraf .next out",
-    "db-reset": "dotenv -e $npm_package_envFile -- prisma migrate dev reset",
-    "db-seed": "dotenv -e $npm_package_envFile -- prisma db seed",
+    "prebuild": "run-s generate migrate",
+
     "dev": "dotenv -e $npm_package_envFile -- pnpm dx:next",
     "dx": "run-p dx:* --print-label",
     "dx:next": "run-s migrate-dev db-seed && next dev",
     "dx:prisma-studio": "dotenv -e $npm_package_envFile -- pnpm prisma-studio",
+
+    "db-reset": "dotenv -e $npm_package_envFile -- prisma migrate dev reset",
+    "db-seed": "dotenv -e $npm_package_envFile -- prisma db seed",
+    "migrate": "prisma migrate deploy",
+    "migrate-dev": "dotenv -e $npm_package_envFile -- prisma migrate dev",
+    "prisma-studio": "dotenv -e $npm_package_envFile -- prisma studio",
     "generate": "prisma generate",
+
     "lint": "eslint --cache .",
     "lint-fix": "pnpm lint --fix",
     "lint:fix": "eslint . --fix",
-    "migrate": "prisma migrate deploy",
-    "migrate-dev": "dotenv -e $npm_package_envFile -- prisma migrate dev",
+
+    "check-types": "tsc --noEmit --pretty --incremental false",
+
+    "clean": "rimraf .next out",
+
     "postinstall": "pnpm generate",
-    "prebuild": "run-s generate migrate",
-    "prepare": "husky || true",
-    "prisma-studio": "dotenv -e $npm_package_envFile -- prisma studio",
-    "vercel-build": "prisma generate && prisma migrate deploy && next build"
+
+    "prepare": "husky || true"
+
   },
   "dependencies": {
     "@auth/prisma-adapter": "^2.4.2",
