@@ -103,4 +103,16 @@
     "classNames",
     "containerClassName"
   ],
+
+  // Hide files from folder
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/node_modules": true,
+    "**/.next": true,
+    "**/out": true,
+  },
 }
