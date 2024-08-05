@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic'
 import { auth } from '@/lib/auth'
 import { FullPageLoadingSpinner } from '@/components/loading-spinner'
 
-const DynamicClientMap = dynamic(() => import('@/components/client-map').then(mod => mod.ClientMap), {
+const DynamicClientMap = dynamic(() => import('@/components/client-provider').then(mod => mod.ClientProvider), {
   loading: () => (
     <FullPageLoadingSpinner />
   ),
