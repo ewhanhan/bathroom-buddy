@@ -3,9 +3,7 @@
 import { useGeolocation } from '@uidotdev/usehooks'
 import { ControlPosition, APIProvider as GoogleMapsProvider, Map, MapControl, Marker } from '@vis.gl/react-google-maps'
 import { useEffect, useState } from 'react'
-import { RiCamera2Fill } from 'react-icons/ri'
-import { CldUploadButton } from 'next-cloudinary'
-import { FullPageLoadingSpinner } from './loading-spinner'
+import { ControlPanel } from './control-panel'
 import { logger } from '@/lib/logger'
 import { useGeolocationPermission } from '@/hooks/useGeolocationPermission'
 import { UNION_STATION } from '@/constant/map'
@@ -19,28 +17,21 @@ const geolocationOptions: PositionOptions = {
 export function ClientMap() {
   const { permissionState } = useGeolocationPermission()
   const { latitude, loading: isLoadingGeolocation, longitude } = useGeolocation(geolocationOptions)
-  const [userLocation, setUserLocation] = useState<google.maps.LatLngLiteral>({
-    lat: latitude ?? UNION_STATION.lat,
-    lng: longitude ?? UNION_STATION.lng,
-  })
+  const [userLocation, setUserLocation] = useState<google.maps.LatLngLiteral | null>(null)
 
   useEffect(() => {
-    if (isLoadingGeolocation || latitude === null || longitude === null) {
+    if (isLoadingGeolocation) {
       return
     }
 
-    logger({ latitude, longitude }, 'Geolocation updated')
-    setUserLocation({
-      lat: latitude,
-      lng: longitude,
-    })
+    if (latitude && longitude) {
+      logger({ latitude, longitude }, 'Geolocation updated')
+      setUserLocation({
+        lat: latitude,
+        lng: longitude,
+      })
+    }
   }, [isLoadingGeolocation, latitude, longitude, permissionState])
-
-  if (isLoadingGeolocation) {
-    return (
-      <FullPageLoadingSpinner />
-    )
-  }
 
   return (
     <div className="flex size-full flex-col gap-4">
@@ -50,7 +41,8 @@ export function ClientMap() {
       >
         <Map
           className="size-full"
-          defaultCenter={userLocation}
+          defaultCenter={UNION_STATION}
+          center={userLocation}
           defaultZoom={17}
           fullscreenControl={false}
           mapTypeControl={false}
@@ -61,25 +53,10 @@ export function ClientMap() {
               position: ControlPosition.RIGHT_BOTTOM,
             }
           }
+          gestureHandling="greedy"
         >
           <MapControl position={ControlPosition.RIGHT_BOTTOM}>
-            <div className="mb-5 mr-2 flex">
-              <CldUploadButton
-                uploadPreset="bathroom-buddy"
-                signatureEndpoint="/api/upload/image"
-                options={{
-                  maxFiles: 5,
-                  multiple: true,
-                  showPoweredBy: false,
-                  sources: ['local', 'camera'],
-                }}
-                onSuccess={(response) => {
-                  logger(response, 'Upload successful')
-                }}
-              >
-                <RiCamera2Fill size={50} />
-              </CldUploadButton>
-            </div>
+            <ControlPanel />
           </MapControl>
           <Marker position={userLocation} />
         </Map>
