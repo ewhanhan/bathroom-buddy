@@ -2,12 +2,10 @@
 
 import { useGeolocation } from '@uidotdev/usehooks'
 import { ControlPosition, APIProvider as GoogleMapsProvider, Map, MapControl, Marker } from '@vis.gl/react-google-maps'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { RiCamera2Fill } from 'react-icons/ri'
+import { CldUploadButton } from 'next-cloudinary'
 import { FullPageLoadingSpinner } from './loading-spinner'
-import { ReviewDialog } from './review-dialog'
-import { Button } from './ui/button'
-import { Input } from './ui/input'
 import { logger } from '@/lib/logger'
 import { useGeolocationPermission } from '@/hooks/useGeolocationPermission'
 import { UNION_STATION } from '@/constant/map'
@@ -25,33 +23,6 @@ export function ClientMap() {
     lat: latitude ?? UNION_STATION.lat,
     lng: longitude ?? UNION_STATION.lng,
   })
-
-  const fileInputRef = useRef<HTMLInputElement>(null)
-
-  const handleButtonClick = () => {
-    fileInputRef.current!.click()
-  }
-  const [imageUrl, setImageUrl] = useState('')
-
-  const handleCapture = (target: EventTarget & HTMLInputElement) => {
-    if (target.files?.length) {
-      const file = target.files[0] as Blob
-
-      if (file.type.startsWith('image/')) {
-        const newUrl = URL.createObjectURL(file)
-
-        // Revoke the previous URL if it exists to avoid memory leaks
-        if (imageUrl) {
-          URL.revokeObjectURL(imageUrl)
-        }
-
-        setImageUrl(newUrl)
-      }
-      else {
-        console.error('The selected file is not an image.')
-      }
-    }
-  }
 
   useEffect(() => {
     if (isLoadingGeolocation || latitude === null || longitude === null) {
@@ -92,31 +63,27 @@ export function ClientMap() {
           }
         >
           <MapControl position={ControlPosition.RIGHT_BOTTOM}>
-            <div className="mb-5 mr-3 flex">
-              <Input
-                ref={fileInputRef}
-                accept="image/*"
-                id="icon-button-file"
-                type="file"
-                capture="environment"
-                onChange={e => handleCapture(e.target)}
-                className="hidden"
-              />
-              <Button
-                aria-label="Open menu"
-                className="bg-white transition-colors duration-200 hover:bg-gray-300 active:bg-gray-400"
-                size="icon"
-                variant="ghost"
-                onClick={handleButtonClick}
+            <div className="mb-5 mr-2 flex">
+              <CldUploadButton
+                uploadPreset="bathroom-buddy"
+                signatureEndpoint="/api/upload/image"
+                options={{
+                  clientAllowedFormats: ['images'],
+                  maxFiles: 5,
+                  multiple: true,
+                  sources: ['local', 'camera'],
+                }}
+                onSuccess={(results) => {
+                  logger(results, 'Upload results')
+                }}
               >
                 <RiCamera2Fill size={50} />
-              </Button>
+              </CldUploadButton>
             </div>
           </MapControl>
           <Marker position={userLocation} />
         </Map>
       </GoogleMapsProvider>
-      <ReviewDialog imageUrl={imageUrl} setSource={setImageUrl} />
     </div>
   )
 }
