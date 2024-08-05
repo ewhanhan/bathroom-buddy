@@ -13,6 +13,8 @@
     "@radix-ui"
   ],
   "typescript.preferences.preferTypeOnlyAutoImports": true, // Prefer type-only imports
+  "typescript.preferences.importModuleSpecifier": "non-relative",
+
   // Auto fix
   "editor.codeActionsOnSave": {
     "source.addMissingImports": "always",
@@ -94,5 +96,11 @@
     "scss",
     "pcss",
     "postcss"
-  ]
+  ],
+    "tailwindCSS.classAttributes": [
+    "class",
+    "className",
+    "classNames",
+    "containerClassName"
+  ],
 }
