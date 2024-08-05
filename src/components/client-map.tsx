@@ -68,13 +68,13 @@ export function ClientMap() {
                 uploadPreset="bathroom-buddy"
                 signatureEndpoint="/api/upload/image"
                 options={{
-                  clientAllowedFormats: ['images'],
                   maxFiles: 5,
                   multiple: true,
+                  showPoweredBy: false,
                   sources: ['local', 'camera'],
                 }}
-                onSuccess={(results) => {
-                  logger(results, 'Upload results')
+                onSuccess={(response) => {
+                  logger(response, 'Upload successful')
                 }}
               >
                 <RiCamera2Fill size={50} />
