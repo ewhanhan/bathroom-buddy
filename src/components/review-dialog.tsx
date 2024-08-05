@@ -1,29 +1,15 @@
 import Image from 'next/image'
-import { useEffect } from 'react'
-import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from './ui/alert-dialog'
-import { Label } from './ui/label'
-import { Textarea } from './ui/textarea'
-import { Button } from './ui/button'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select'
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog'
+import { Label } from '@/components/ui/label'
+import { Textarea } from '@/components/ui/textarea'
+import { Button } from '@/components/ui/button'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 
 export function ReviewDialog({
   imageUrl,
-  setSource,
 }: {
   imageUrl: string
-  setSource: (source: string) => void
 }) {
-  const revokeObjectURL = (url: any) => {
-    URL.revokeObjectURL(url)
-  }
-
-  useEffect(() => {
-    // on dismount clear the url
-    return () => {
-      revokeObjectURL(imageUrl)
-    }
-  }, [imageUrl])
-
   return (
     <AlertDialog open={Boolean(imageUrl)}>
       <AlertDialogContent className="sm:max-w-[600px]">
@@ -86,12 +72,6 @@ export function ReviewDialog({
           <AlertDialogCancel asChild>
             <Button
               variant="ghost"
-              onClick={
-                () => {
-                  revokeObjectURL(imageUrl)
-                  setSource('')
-                }
-              }
             >
               Cancel
             </Button>

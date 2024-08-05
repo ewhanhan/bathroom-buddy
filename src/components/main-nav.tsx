@@ -1,8 +1,8 @@
 import React from 'react'
 import {
   NavigationMenuLink,
-} from './ui/navigation-menu'
-import { EnhancedLink } from './enhanced-link'
+} from '@/components/ui/navigation-menu'
+import { EnhancedLink } from '@/components/enhanced-link'
 import { cn } from '@/lib/utils'
 
 export function MapIcon(props: React.SVGProps<SVGSVGElement>) {

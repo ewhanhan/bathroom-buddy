@@ -1,5 +1,5 @@
-import { MainNav } from './main-nav'
-import { UserButton } from './user-button'
+import { MainNav } from '@/components/main-nav'
+import { UserButton } from '@/components/user-button'
 
 export function Header() {
   return (
