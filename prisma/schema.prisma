@@ -9,16 +9,17 @@ generator client {
 }
 
 model User {
-  id            String    @id @default(uuid())
-  name          String
-  email         String?   @unique
-  password      String?
-  emailVerified DateTime? @map("email_verified")
-  image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  accounts      Account[]
-  sessions      Session[]
+  id             String           @id @default(uuid())
+  name           String
+  email          String?          @unique
+  password       String?
+  emailVerified  DateTime?        @map("email_verified")
+  image          String?
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+  accounts       Account[]
+  sessions       Session[]
+  WashroomReview WashroomReview[]
 
   @@map("users")
 }
@@ -66,4 +67,30 @@ model VerificationRequest {
 
   @@unique([identifier, token])
   @@map("verification_requests")
+}
+
+model WashroomReview {
+  id           String   @id @default(uuid())
+  userId       String?
+  washroomName String
+  rating       Int      @default(0)
+  cleanliness  Int      @default(0)
+  comments     String?
+  createdAt    DateTime @default(now())
+  photos       Photo[]
+  user         User?    @relation(fields: [userId], references: [id])
+  status       String   @default("active")
+
+  @@map("washroom_reviews")
+}
+
+model Photo {
+  id               String          @id @default(uuid())
+  url              String
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  washroomReview   WashroomReview? @relation(fields: [washroomReviewId], references: [id])
+  washroomReviewId String?
+
+  @@map("photos")
 }
