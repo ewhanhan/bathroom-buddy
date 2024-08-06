@@ -46,7 +46,7 @@ export function ClientMap() {
     map.panTo(userLocation)
   }, [map, userLocation])
 
-  if (!error) {
+  if (error) {
     errorLogger(error, 'Geolocation error')
     throw new Error('Geolocation error')
   }
