@@ -1,11 +1,12 @@
-import { CldUploadButton } from 'next-cloudinary'
+import { CldUploadWidget } from 'next-cloudinary'
 import { RiCamera2Fill } from 'react-icons/ri'
 import { logger } from '@/lib/logger'
+import { Button } from '@/components/ui/button'
 
 export function ControlPanel() {
   return (
     <div className="mb-5 mr-2 flex">
-      <CldUploadButton
+      <CldUploadWidget
         uploadPreset="bathroom-buddy"
         signatureEndpoint="/api/upload/image"
         options={{
@@ -14,12 +15,27 @@ export function ControlPanel() {
           showPoweredBy: false,
           sources: ['local', 'camera'],
         }}
-        onSuccess={(response) => {
-          logger(response, 'Upload successful')
+        onQueuesEnd={(response, { widget }) => {
+          logger(response, 'All uploads completed')
+          widget.close()
         }}
       >
-        <RiCamera2Fill size={50} />
-      </CldUploadButton>
+        {({ open }) => {
+          function handleOnClick() {
+            open()
+          }
+
+          return (
+            <Button
+              variant="outline"
+              size="icon"
+              onClick={handleOnClick}
+            >
+              <RiCamera2Fill size={50} />
+            </Button>
+          )
+        }}
+      </CldUploadWidget>
     </div>
   )
 }
