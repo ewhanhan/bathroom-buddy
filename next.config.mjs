@@ -6,6 +6,10 @@ const withBundleAnalyzer = NextBundleAnalyzer({
 })
 
 const nextConfig = {
+  images: {
+    loader: 'custom',
+    loaderFile: './lib/cloudinary-loader.js',
+  },
   logging: {
     fetches: {
       fullUrl: true,
