@@ -1,11 +1,12 @@
 import { CldUploadWidget } from 'next-cloudinary'
 import { RiCamera2Fill } from 'react-icons/ri'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { logger } from '@/lib/logger'
 import { Button } from '@/components/ui/button'
 
 export function ControlPanel() {
   const router = useRouter()
+  const searchParams = useSearchParams()
 
   return (
     <div className="mb-5 mr-2 flex">
@@ -19,10 +20,20 @@ export function ControlPanel() {
           sources: ['local', 'camera'],
         }}
         onQueuesEnd={(response: any, { widget }) => {
-          logger(response.info.files, 'All uploads completed')
+          logger(response, 'All uploads completed')
 
-          // add a query parameter to the URL to trigger a revalidation
-          router.push(`?uploaded=${encodeURIComponent(response.data.info.files[0].uploadInfo.public_id ?? response.info.files[0].uploadInfo.public_id)}`)
+          const params = new URLSearchParams(searchParams.toString())
+
+          const publicIds = response.data.info.files
+            .map((file: { uploadInfo: { public_id: any } }) => file.uploadInfo.public_id)
+            .filter((publicId: any) => publicId) // Filter out any undefined or null values
+
+          if (publicIds.length > 0) {
+            params.set('uploaded', publicIds.join(','))
+          }
+
+          logger(params.toString(), 'New search params')
+          router.push(`?${params.toString()}`)
 
           widget.close()
         }}
