@@ -2,28 +2,42 @@
 
 import Image from 'next/image'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { useCallback } from 'react'
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
 import { Input } from '@/components/ui/input'
+import { logger } from '@/lib/logger'
+import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
+import { Card, CardContent } from '@/components/ui/card'
 
 export function ReviewDialog() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const paramValue = decodeURIComponent(searchParams.get('uploaded') ?? 'undefined')
+  const params = new URLSearchParams(searchParams.toString())
+  const uploadedParam = params.get('uploaded')
+  const imageIds = uploadedParam ? uploadedParam.split(',') : []
 
-  const handleCancel = () => {
+  logger(imageIds, 'Public IDs Array')
+
+  const handleCancel = useCallback(() => {
     router.push('/')
-  }
+  }, [router])
 
-  if (paramValue === 'undefined') {
+  const validId = imageIds?.[0]
+
+  if (
+    uploadedParam === null
+    || validId === 'undefined'
+    || !imageIds.length
+  ) {
     return null
   }
 
   return (
-    <AlertDialog open={Boolean(paramValue)}>
+    <AlertDialog open={Boolean(validId)}>
       <AlertDialogContent className="sm:max-w-[600px]">
         <AlertDialogHeader>
           <AlertDialogTitle>Review Washroom</AlertDialogTitle>
@@ -32,14 +46,27 @@ export function ReviewDialog() {
           </AlertDialogDescription>
         </AlertDialogHeader>
         <div className="grid gap-6">
-          <div className="relative max-h-48 w-full pt-[50%]">
-            <Image
-              src={paramValue}
-              alt="Washroom"
-              objectFit="contain"
-              fill
-              className="left-0 top-0 size-full rounded-2xl object-cover"
-            />
+          <div className="flex w-full justify-center">
+            <Carousel className="w-full max-w-sm">
+              <CarouselContent className="ml-1">
+                {imageIds.map(id => (
+                  <CarouselItem key={id} className="pl-1 md:basis-1/2 lg:basis-1/3">
+                    <div className="p-1">
+                      <Card>
+                        <CardContent className="flex aspect-square items-center justify-center p-6">
+                          <Image
+                            src={id}
+                            alt="Uploaded image"
+                            fill
+                            className="rounded-lg"
+                          />
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
           </div>
           <div className="grid gap-4">
             <div className="grid gap-2">
