@@ -61,7 +61,7 @@ export default antfu({
     },
     // Next.js needs default exports for pages and API points
     {
-      files: ['src/app/**/*.{ts,tsx}'],
+      files: ['app/**/*.{ts,tsx}'],
       rules: {
         'import/no-default-export': 'off',
       },

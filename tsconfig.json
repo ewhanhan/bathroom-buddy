@@ -6,7 +6,9 @@
     "module": "esnext",
     "moduleResolution": "bundler",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./*"],
+      "auth": ["./auth"],
+      "db": ["./db"]
     },
     "resolveJsonModule": true,
     "allowJs": true,
@@ -30,7 +32,7 @@
     ]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["./out/**/*", "./node_modules/**/*"],
+  "exclude": ["node_modules", "out"],
   "ts-node": {
     "compilerOptions": {
       "module": "commonjs"
