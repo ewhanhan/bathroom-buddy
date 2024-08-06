@@ -14,18 +14,18 @@ const geolocationOptions: PositionOptions = {
 } satisfies PositionOptions
 
 export function ClientMap() {
+  const map = useMap()
   const { permissionState } = useGeolocationPermission()
   const { latitude, loading: isLoadingGeolocation, longitude } = useGeolocation(geolocationOptions)
   const [userLocation, setUserLocation] = useState<google.maps.LatLngLiteral | null>(null)
-  const map = useMap()
 
   useEffect(() => {
-    if (isLoadingGeolocation) {
-      return
-    }
-
     if (latitude && longitude) {
-      logger({ latitude, longitude }, 'Geolocation updated')
+      logger({
+        latitude,
+        longitude,
+      }, 'Geolocation updated')
+
       setUserLocation({
         lat: latitude,
         lng: longitude,
@@ -46,10 +46,9 @@ export function ClientMap() {
     logger({ userLocation }, 'Pan to user location')
     map.panTo(userLocation)
   }, [map, userLocation])
-  return (
 
+  return (
     <Map
-      mapId="client-map"
       className="size-full"
       defaultCenter={UNION_STATION}
       defaultZoom={17}
