@@ -7,7 +7,7 @@ import { ControlPanel } from '@/components/control-panel'
 import { ToiletMarker } from '@/components/custom-pins'
 import { UNION_STATION } from '@/constant/map'
 import { useGeolocationPermission } from '@/hooks/useGeolocationPermission'
-import { logger } from '@/lib/logger'
+import { errorLogger, logger } from '@/lib/logger'
 
 const geolocationOptions: PositionOptions = {
   enableHighAccuracy: true,
@@ -16,7 +16,7 @@ const geolocationOptions: PositionOptions = {
 export function ClientMap() {
   const map = useMap()
   const { permissionState } = useGeolocationPermission()
-  const { latitude, loading: isLoadingGeolocation, longitude } = useGeolocation(geolocationOptions)
+  const { error, latitude, loading: isLoadingGeolocation, longitude } = useGeolocation(geolocationOptions)
   const [userLocation, setUserLocation] = useState<google.maps.LatLngLiteral | null>(null)
 
   useEffect(() => {
@@ -35,7 +35,6 @@ export function ClientMap() {
 
   useEffect(() => {
     if (!map) {
-      logger('Map not ready')
       return
     }
 
@@ -46,6 +45,11 @@ export function ClientMap() {
     logger({ userLocation }, 'Pan to user location')
     map.panTo(userLocation)
   }, [map, userLocation])
+
+  if (!error) {
+    errorLogger(error, 'Geolocation error')
+    throw new Error('Geolocation error')
+  }
 
   return (
     <Map
