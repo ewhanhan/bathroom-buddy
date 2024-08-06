@@ -13,7 +13,7 @@ export default async function Index() {
   const session = await auth()
 
   return (
-    <SessionProvider basePath="/auth" session={session}>
+    <SessionProvider session={session}>
       <DynamicClientMap />
     </SessionProvider>
   )
