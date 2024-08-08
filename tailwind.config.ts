@@ -1,4 +1,3 @@
-import tailwindcssForms from '@tailwindcss/forms'
 import type { Config as tailwindConfig } from 'tailwindcss'
 import tailwindcssAnimate from 'tailwindcss-animate'
 
@@ -12,7 +11,6 @@ export default {
   darkMode: 'selector',
   plugins: [
     tailwindcssAnimate,
-    tailwindcssForms,
   ],
   theme: {
     container: {
