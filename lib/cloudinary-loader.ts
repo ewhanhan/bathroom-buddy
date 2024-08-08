@@ -3,7 +3,7 @@ export default function CloudinaryLoader({ options = {}, quality, src, width }: 
   options?: Record<string, string>
   quality?: string
   src: string
-  width: number
+  width?: number
 }) {
   const defaultParams = {
     c: 'limit',
