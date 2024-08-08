@@ -7,8 +7,7 @@ const withBundleAnalyzer = NextBundleAnalyzer({
 
 const nextConfig = {
   images: {
-    loader: 'custom',
-    loaderFile: './lib/cloudinary-loader.js',
+    domains: ['res.cloudinary.com'],
   },
   logging: {
     fetches: {
