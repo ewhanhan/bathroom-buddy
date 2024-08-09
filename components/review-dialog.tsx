@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -15,38 +15,59 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { Card, CardContent } from '@/components/ui/card'
 import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
 import { CldImage } from '@/components/ui/CldImage'
+import CloudinaryLoader from '@/lib/cloudinary-loader'
 
-const formSchema = z.object({
-  cleanliness: z.enum(['5', '4', '3', '2', '1'], {
-    invalid_type_error: 'Invalid rating value',
-    required_error: 'Rating is required',
-  }),
+const reviewFormSchema = z.object({
+  cleanliness: z.coerce.number().min(0).max(5),
   comments: z.string(),
-  rating: z.enum(['5', '4', '3', '2', '1'], {
-    invalid_type_error: 'Invalid cleanliness value',
-    required_error: 'Cleanliness is required',
-  }),
+  rating: z.coerce.number().min(0).max(5),
   washroomName: z.string().optional(),
 })
 
 export function ReviewDialog() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof reviewFormSchema>>({
+    resolver: zodResolver(reviewFormSchema),
   })
   const router = useRouter()
   const searchParams = useSearchParams()
   const params = new URLSearchParams(searchParams.toString())
   const uploadedParam: string | null = params.get('uploaded')
-  const imageIds: string[] = uploadedParam ? uploadedParam.split(',') : []
+  const imageIds: string[] = useMemo(() => uploadedParam ? uploadedParam.split(',') : [], [uploadedParam])
   const firstImageId: string | undefined = imageIds?.[0]
 
   const handleCancel = useCallback(() => {
     router.push('/')
   }, [router])
 
-  const onSubmit = useCallback(async (values: z.infer<typeof formSchema>) => {
-    logger(values, 'Form submitted')
-  }, [])
+  const onSubmit = useCallback(async (values: z.infer<typeof reviewFormSchema>) => {
+    logger({
+      ...values,
+      urls: imageIds.map((id) => {
+        return CloudinaryLoader({ src: id })
+      }),
+    }, 'Form submitted')
+
+    try {
+      const response = await fetch('/api/reviews', {
+        body: JSON.stringify(
+          {
+            ...values,
+            imageUrls: imageIds.map((id) => {
+              return CloudinaryLoader({ src: id })
+            }),
+          },
+        ),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+      })
+      logger(response, 'Response')
+    }
+    catch (error) {
+      console.error('Error:', error)
+    }
+  }, [imageIds])
 
   if (
     uploadedParam === null
@@ -104,9 +125,9 @@ export function ReviewDialog() {
                     name="washroomName"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel htmlFor="washroomName">Name</FormLabel>
+                        <FormLabel>Name</FormLabel>
                         <FormControl>
-                          <Input id="washroomName" placeholder="Name this place..." className="resize-none" {...field} />
+                          <Input placeholder="Name this place..." className="resize-none" {...field} />
                         </FormControl>
                       </FormItem>
                     )}
@@ -119,7 +140,7 @@ export function ReviewDialog() {
                       name="rating"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel htmlFor="rating">Rating</FormLabel>
+                          <FormLabel>Rating</FormLabel>
                           <Select onValueChange={field.onChange}>
                             <FormControl>
                               <SelectTrigger>
@@ -144,7 +165,7 @@ export function ReviewDialog() {
                       name="cleanliness"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel htmlFor="cleanliness">Cleanliness</FormLabel>
+                          <FormLabel>Cleanliness</FormLabel>
                           <Select onValueChange={field.onChange}>
                             <FormControl>
                               <SelectTrigger>
@@ -170,9 +191,9 @@ export function ReviewDialog() {
                     name="comments"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel htmlFor="comments">Comments</FormLabel>
+                        <FormLabel>Comments</FormLabel>
                         <FormControl>
-                          <Textarea id="comments" placeholder="Share your thoughts..." className="resize-none" {...field} />
+                          <Textarea placeholder="Share your thoughts..." className="resize-none" {...field} />
                         </FormControl>
                       </FormItem>
                     )}
