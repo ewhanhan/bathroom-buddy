@@ -1,6 +1,10 @@
 import React from 'react'
 
-export function LoadingSpinner({ className = '', color = 'text-gray-900', size = 24 }: {
+export function LoadingSpinner({
+  className = '',
+  color = 'text-gray-900',
+  size = 24,
+}: {
   size?: number
   color?: string
   className?: string
