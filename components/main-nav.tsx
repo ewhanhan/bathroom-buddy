@@ -43,7 +43,7 @@ export function MainNav() {
             >
               <MapIcon className="size-6 text-primary" aria-hidden="true" />
               <h1
-                className="text-lg font-semibold"
+                className="text-sm font-semibold sm:text-lg"
                 aria-label="Bathroom Buddy"
               >
                 Bathroom Buddy
