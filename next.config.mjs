@@ -7,7 +7,10 @@ const withBundleAnalyzer = NextBundleAnalyzer({
 
 const nextConfig = {
   images: {
-    domains: ['res.cloudinary.com'],
+    remotePatterns: [{
+      hostname: 'res.cloudinary.com',
+      protocol: 'https',
+    }],
   },
   logging: {
     fetches: {
