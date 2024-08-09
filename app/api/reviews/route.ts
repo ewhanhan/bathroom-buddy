@@ -2,23 +2,12 @@ import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import prisma from '@/db'
-
-const reviewFormSchema = z.object({
-  cleanliness: z.coerce.number().min(0).max(5),
-  comments: z.string(),
-  imageUrls: z.array(z.string()),
-  rating: z.coerce.number().min(0).max(5),
-  washroomName: z.string(),
-})
-
-const deleteSchema = z.object({
-  id: z.string().uuid(),
-})
+import { DeleteReviewSchema, ReviewWithPhotosSchema } from '@/schemas/washroom-review-schema'
 
 async function POST(req: NextRequest) {
   try {
     const body = await req.json()
-    const data = reviewFormSchema.parse(body)
+    const data = ReviewWithPhotosSchema.parse(body)
 
     const [washroomReviewResult, createdPhotosResult] = await prisma.$transaction(async (prisma) => {
       const reviewCreationResult = await prisma.washroomReview.create({
@@ -71,7 +60,7 @@ async function POST(req: NextRequest) {
 async function DELETE(req: NextRequest) {
   try {
     const body = await req.json()
-    const data = deleteSchema.parse(body)
+    const data = DeleteReviewSchema.parse(body)
 
     await prisma.$transaction([
       prisma.washroomReview.delete({
