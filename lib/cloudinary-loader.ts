@@ -9,9 +9,8 @@ export default function CloudinaryLoader({ options = {}, quality, src, width }: 
     c: 'limit',
     f: 'auto',
     q: quality || 'auto',
-    w: width,
+    ...(width && { w: width }), // Conditionally add width if it is defined
   }
-
   // Merge default parameters with additional options
   const params = { ...defaultParams, ...options }
 

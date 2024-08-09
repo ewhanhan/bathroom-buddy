@@ -1,6 +1,5 @@
 import React from 'react'
-import { EnhancedLink } from '@/components/enhanced-link'
-import { NavigationMenuLink } from '@/components/ui/navigation-menu'
+import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, navigationMenuTriggerStyle } from '@/components/ui/navigation-menu'
 import { cn } from '@/lib/utils'
 
 export function MapIcon(props: React.SVGProps<SVGSVGElement>) {
@@ -53,20 +52,43 @@ ListItem.displayName = 'ListItem'
 export function MainNav() {
   return (
     <nav className="flex items-center">
-      <EnhancedLink
-        href="/"
-        prefetch={false}
-        className="flex items-center gap-2"
-        aria-label="Home"
-      >
-        <MapIcon className="size-6 text-primary" aria-hidden="true" />
-        <h1
-          className="text-lg font-semibold"
-          aria-label="Bathroom Buddy"
-        >
-          Bathroom Buddy
-        </h1>
-      </EnhancedLink>
+      <NavigationMenu>
+
+        <NavigationMenuList>
+          <NavigationMenuItem>
+            <NavigationMenuLink
+              href="/"
+              className="flex items-center gap-2"
+              aria-label="Home"
+            >
+              <MapIcon className="size-6 text-primary" aria-hidden="true" />
+              <h1
+                className="text-lg font-semibold"
+                aria-label="Bathroom Buddy"
+              >
+                Bathroom Buddy
+              </h1>
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <NavigationMenuLink
+              href="/dashboard"
+              className={navigationMenuTriggerStyle()}
+            >
+              Dashboard
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <NavigationMenuLink
+              href="/"
+              className={navigationMenuTriggerStyle()}
+            >
+              Map
+            </NavigationMenuLink>
+          </NavigationMenuItem>
+        </NavigationMenuList>
+      </NavigationMenu>
+
     </nav>
   )
 }

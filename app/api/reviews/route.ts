@@ -5,6 +5,8 @@ import prisma from '@/db'
 import { DeleteReviewSchema, ReviewWithPhotosSchema } from '@/schemas/washroom-review-schema'
 import { logger } from '@/lib/logger'
 
+export const dynamic = 'force-dynamic'
+
 async function POST(req: NextRequest) {
   try {
     const body = await req.json()
@@ -88,4 +90,21 @@ async function DELETE(req: NextRequest) {
   }
 }
 
-export { POST, DELETE }
+async function GET() {
+  try {
+    // Fetch all washroom reviews
+    const washroomReviews = await prisma.washroomReview.findMany({
+      include: {
+        photos: true, // Include the photos related to each washroom review
+      },
+    })
+    logger(JSON.stringify(washroomReviews, null, 2), 'GET')
+    return NextResponse.json(washroomReviews, { status: 200 })
+  }
+  catch (error) {
+    console.error(error)
+    return NextResponse.json({ error: 'An error occurred while fetching washroom reviews' }, { status: 500 })
+  }
+}
+
+export { POST, DELETE, GET }
