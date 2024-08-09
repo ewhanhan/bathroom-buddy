@@ -72,7 +72,13 @@ export default {
           session.error = 'RefreshAccessTokenError'
         }
       }
-      return session
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: user.id,
+        },
+      }
     },
   },
   debug: isLocal,

@@ -14,11 +14,9 @@ export default async function Index() {
   const session = await auth()
 
   return (
-    <>
-      <SessionProvider session={session}>
-        <DynamicClientMap />
-      </SessionProvider>
-      <ReviewDialog session={session} />
-    </>
+    <SessionProvider session={session}>
+      <DynamicClientMap />
+      <ReviewDialog />
+    </SessionProvider>
   )
 }
