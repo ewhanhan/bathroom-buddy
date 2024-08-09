@@ -6,7 +6,6 @@ import { useCallback, useEffect, useMemo } from 'react'
 import { useForm, useFormState } from 'react-hook-form'
 import type { z } from 'zod'
 import { useSession } from 'next-auth/react'
-import type { Session } from 'next-auth'
 import { FullPageLoadingSpinner } from '@/components/loading-spinner'
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
@@ -24,7 +23,7 @@ import { ReviewFormSchema } from '@/schemas/washroom-review-schema'
 
 export function ReviewDialog(
 ) {
-  const session = useSession() as unknown as Session
+  const session = useSession()
   const form = useForm<z.infer<typeof ReviewFormSchema>>({
     resolver: zodResolver(ReviewFormSchema),
   })
@@ -75,7 +74,7 @@ export function ReviewDialog(
             imageUrls: imageIds.map((id) => {
               return CloudinaryLoader({ src: id })
             }),
-            userId: session?.user?.id,
+            userId: session?.data?.user?.id,
           },
         ),
         headers: {
@@ -88,7 +87,7 @@ export function ReviewDialog(
     catch (error) {
       console.error('Error:', error)
     }
-  }, [imageIds, session?.user?.id])
+  }, [imageIds, session?.data?.user?.id])
 
   if (
     uploadedParam === null
