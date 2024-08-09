@@ -13,7 +13,7 @@ const reviewFormSchema = z.object({
   washroomName: z.string().optional(),
 })
 
-export async function POST(req: NextRequest) {
+async function POST(req: NextRequest) {
   try {
     const body = await req.json()
     logger(req, 'Request body')
@@ -69,11 +69,4 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function handler(req: NextRequest) {
-  if (req.method === 'POST') {
-    return POST(req)
-  }
-  else {
-    return NextResponse.json({ message: 'Method not allowed' }, { status: 405 })
-  }
-}
+export { POST }
