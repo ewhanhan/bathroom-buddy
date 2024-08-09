@@ -21,7 +21,7 @@ const reviewFormSchema = z.object({
   cleanliness: z.coerce.number().min(0).max(5),
   comments: z.string(),
   rating: z.coerce.number().min(0).max(5),
-  washroomName: z.string().optional(),
+  washroomName: z.string(),
 })
 
 export function ReviewDialog() {
