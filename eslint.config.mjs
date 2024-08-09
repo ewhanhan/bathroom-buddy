@@ -47,6 +47,7 @@ export default antfu({
   },
 }, ...compat.config({
   extends: [
+    'plugin:@tanstack/eslint-plugin-query/recommended',
     'plugin:@next/next/core-web-vitals',
     'plugin:@next/next/recommended',
     'plugin:tailwindcss/recommended',
