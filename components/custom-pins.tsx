@@ -26,7 +26,7 @@ export function ToiletMarker({
         {
           color: 'black',
           fontSize: '1rem',
-          text: '🚽',
+          text: '👋',
         }
       }
       clickable
