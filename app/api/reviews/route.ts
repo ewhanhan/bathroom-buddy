@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import prisma from '@/db'
 import { DeleteReviewSchema, ReviewWithPhotosSchema } from '@/schemas/washroom-review-schema'
-import { logger } from '@/lib/logger'
+import { errorLogger, logger } from '@/lib/logger'
 
 export const dynamic = 'force-dynamic'
 
@@ -48,16 +48,24 @@ async function POST(req: NextRequest) {
       },
       message: 'Form submitted successfully',
       status: 'success',
-    }, { status: 201 }) // Use HTTP 201 Created status code for resource creation
+    }, {
+      status: 201,
+    })
   }
   catch (error) {
     if (error instanceof z.ZodError) {
       // Send validation error response
-      return NextResponse.json({ errors: error.errors }, { status: 400 })
+      return NextResponse.json({
+        errors: error.errors,
+      }, {
+        status: 400,
+      })
     }
     else {
       // Send generic error response
-      return NextResponse.json({ message: 'Internal server error' }, { status: 500 })
+      return NextResponse.json({ message: 'Internal server error' }, {
+        status: 500,
+      })
     }
   }
 }
@@ -81,29 +89,44 @@ async function DELETE(req: NextRequest) {
   catch (error) {
     if (error instanceof z.ZodError) {
       // Send validation error response
-      return NextResponse.json({ errors: error.errors }, { status: 400 })
+      return NextResponse.json({
+        errors: error.errors,
+      }, {
+        status: 400,
+      })
     }
     else {
       // Send generic error response
-      return NextResponse.json({ message: 'Internal server error' }, { status: 500 })
+      return NextResponse.json({
+        message: 'Internal server error',
+      }, {
+        status: 500,
+      })
     }
   }
 }
 
 async function GET() {
   try {
-    // Fetch all washroom reviews
     const washroomReviews = await prisma.washroomReview.findMany({
       include: {
-        photos: true, // Include the photos related to each washroom review
+        photos: true,
       },
     })
     logger(JSON.stringify(washroomReviews, null, 2), 'GET')
-    return NextResponse.json(washroomReviews, { status: 200 })
+
+    return NextResponse.json(washroomReviews, {
+      status: 200,
+    })
   }
   catch (error) {
-    console.error(error)
-    return NextResponse.json({ error: 'An error occurred while fetching washroom reviews' }, { status: 500 })
+    errorLogger(error, 'Error fetching washroom reviews')
+
+    return NextResponse.json({
+      error: 'An error occurred while fetching washroom reviews',
+    }, {
+      status: 500,
+    })
   }
 }
 
