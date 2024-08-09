@@ -1,6 +1,7 @@
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 import { z } from 'zod'
+import { revalidatePath } from 'next/cache'
 import prisma from '@/db'
 import { DeleteReviewSchema, ReviewWithPhotosSchema } from '@/schemas/washroom-review-schema'
 import { errorLogger, logger } from '@/lib/logger'
@@ -41,6 +42,7 @@ async function POST(req: NextRequest) {
       return [reviewCreationResult, reviewPhotosPromises]
     })
 
+    revalidatePath('/dashboard')
     return NextResponse.json({
       data: {
         ...washroomReviewResult,
@@ -84,6 +86,7 @@ async function DELETE(req: NextRequest) {
       }),
     ])
 
+    revalidatePath('/dashboard')
     return NextResponse.json(null, { status: 204 })
   }
   catch (error) {
