@@ -1,26 +1,31 @@
 'use client'
 
+import { zodResolver } from '@hookform/resolvers/zod'
+import type { Session } from 'next-auth'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useMemo } from 'react'
-import type { z } from 'zod'
 import { useForm, useFormState } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
+import type { z } from 'zod'
+import { FullPageLoadingSpinner } from '@/components/loading-spinner'
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
+import { Card, CardContent } from '@/components/ui/card'
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
+import { CldImage } from '@/components/ui/CldImage'
+import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Textarea } from '@/components/ui/textarea'
-import { Input } from '@/components/ui/input'
-import { errorLogger, logger } from '@/lib/logger'
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
-import { Card, CardContent } from '@/components/ui/card'
-import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form'
-import { CldImage } from '@/components/ui/CldImage'
-import CloudinaryLoader from '@/lib/cloudinary-loader'
 import { useToast } from '@/components/ui/use-toast'
-import { FullPageLoadingSpinner } from '@/components/loading-spinner'
+import CloudinaryLoader from '@/lib/cloudinary-loader'
+import { errorLogger, logger } from '@/lib/logger'
 import { ReviewFormSchema } from '@/schemas/washroom-review-schema'
 
-export function ReviewDialog() {
+export function ReviewDialog({
+  session,
+}: {
+  session: Session | null
+}) {
   const form = useForm<z.infer<typeof ReviewFormSchema>>({
     resolver: zodResolver(ReviewFormSchema),
   })
@@ -63,13 +68,6 @@ export function ReviewDialog() {
   }, [router])
 
   const onSubmit = useCallback(async (values: z.infer<typeof ReviewFormSchema>) => {
-    logger({
-      ...values,
-      urls: imageIds.map((id) => {
-        return CloudinaryLoader({ src: id })
-      }),
-    }, 'Form submitted')
-
     try {
       const response = await fetch('/api/reviews', {
         body: JSON.stringify(
@@ -78,6 +76,7 @@ export function ReviewDialog() {
             imageUrls: imageIds.map((id) => {
               return CloudinaryLoader({ src: id })
             }),
+            userId: session?.user?.id,
           },
         ),
         headers: {
@@ -90,7 +89,7 @@ export function ReviewDialog() {
     catch (error) {
       console.error('Error:', error)
     }
-  }, [imageIds])
+  }, [imageIds, session?.user.id])
 
   if (
     uploadedParam === null

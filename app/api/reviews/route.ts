@@ -3,11 +3,13 @@ import { NextResponse } from 'next/server'
 import { z } from 'zod'
 import prisma from '@/db'
 import { DeleteReviewSchema, ReviewWithPhotosSchema } from '@/schemas/washroom-review-schema'
+import { logger } from '@/lib/logger'
 
 async function POST(req: NextRequest) {
   try {
     const body = await req.json()
     const data = ReviewWithPhotosSchema.parse(body)
+    logger(data, 'Form data')
 
     const [washroomReviewResult, createdPhotosResult] = await prisma.$transaction(async (prisma) => {
       const reviewCreationResult = await prisma.washroomReview.create({
@@ -15,6 +17,7 @@ async function POST(req: NextRequest) {
           cleanliness: data.cleanliness,
           comments: data.comments,
           rating: data.rating,
+          userId: data.userId,
           washroomName: data.washroomName,
         },
       })

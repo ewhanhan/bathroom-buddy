@@ -18,7 +18,7 @@ export default async function Index() {
       <SessionProvider session={session}>
         <DynamicClientMap />
       </SessionProvider>
-      <ReviewDialog />
+      <ReviewDialog session={session} />
     </>
   )
 }
