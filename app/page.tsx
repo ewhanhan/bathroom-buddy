@@ -2,9 +2,14 @@ import { SessionProvider } from 'next-auth/react'
 import dynamic from 'next/dynamic'
 import { auth } from 'auth'
 import { FullPageLoadingSpinner } from '@/components/loading-spinner'
-import { ReviewDialog } from '@/components/review-dialog'
 
 const DynamicClientMap = dynamic(() => import('../components/client-provider').then(mod => mod.ClientProvider), {
+  loading: () => (
+    <FullPageLoadingSpinner />
+  ),
+})
+
+const DynamicReviewDialog = dynamic(() => import('../components/review-dialog').then(mod => mod.ReviewDialog), {
   loading: () => (
     <FullPageLoadingSpinner />
   ),
@@ -16,7 +21,7 @@ export default async function Index() {
   return (
     <SessionProvider session={session}>
       <DynamicClientMap />
-      <ReviewDialog />
+      <DynamicReviewDialog />
     </SessionProvider>
   )
 }

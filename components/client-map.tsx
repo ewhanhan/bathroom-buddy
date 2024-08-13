@@ -3,11 +3,13 @@
 import { useGeolocation } from '@uidotdev/usehooks'
 import { ControlPosition, Map, MapControl, useMap } from '@vis.gl/react-google-maps'
 import { useEffect, useState } from 'react'
-import { ControlPanel } from '@/components/control-panel'
+import dynamic from 'next/dynamic'
 import { ToiletMarker } from '@/components/custom-pins'
 import { UNION_STATION } from '@/constant/map'
 import { useGeolocationPermission } from '@/hooks/useGeolocationPermission'
 import { errorLogger, logger } from '@/lib/logger'
+
+const DynamicControlPanel = dynamic(() => import('./control-panel').then(mod => mod.ControlPanel))
 
 const geolocationOptions: PositionOptions = {
   enableHighAccuracy: true,
@@ -66,7 +68,7 @@ export function ClientMap() {
       gestureHandling="greedy"
     >
       <MapControl position={ControlPosition.RIGHT_BOTTOM}>
-        <ControlPanel />
+        <DynamicControlPanel />
       </MapControl>
       {/* {userLocation && <UserMarker position={userLocation} />} */}
       {userLocation && <ToiletMarker position={userLocation} />}
