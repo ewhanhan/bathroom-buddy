@@ -103,18 +103,18 @@ export function ReviewDialog(
 
   return (
     <AlertDialog open={Boolean(firstImageId)}>
-      <AlertDialogContent className="sm:max-w-[600px]">
+      <AlertDialogContent className="mx-auto max-h-screen overflow-y-auto sm:max-w-[600px]">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="size-full">
             <AlertDialogHeader>
               <AlertDialogTitle>Review Washroom</AlertDialogTitle>
               <AlertDialogDescription>
-                Please provide your review for the washroom. Upload an image if you have one.
+                Please provide your review for the washroom!
               </AlertDialogDescription>
             </AlertDialogHeader>
-            <section className="grid gap-6">
+            <section className="mt-4 grid gap-2">
               <div className="flex w-full justify-center">
-                <Carousel className="w-full max-w-sm">
+                <Carousel className="sx:max-w-sm w-full max-w-[50vw]">
                   <CarouselContent>
                     {imageIds.map(id => (
                       <CarouselItem key={id}>
@@ -136,10 +136,14 @@ export function ReviewDialog(
                       </CarouselItem>
                     ))}
                   </CarouselContent>
-                  <nav>
-                    <CarouselPrevious />
-                    <CarouselNext />
-                  </nav>
+                  {
+                    imageIds?.length > 1 && (
+                      <nav>
+                        <CarouselPrevious />
+                        <CarouselNext />
+                      </nav>
+                    )
+                  }
                 </Carousel>
               </div>
               <fieldset className="grid gap-2">
