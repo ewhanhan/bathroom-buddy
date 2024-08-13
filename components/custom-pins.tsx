@@ -1,5 +1,5 @@
 import { AdvancedMarker, Marker } from '@vis.gl/react-google-maps'
-import { RiAccountPinCircleFill } from 'react-icons/ri'
+import { UserCircle } from '@phosphor-icons/react/UserCircle'
 import { logger } from '@/lib/logger'
 
 export function UserMarker({
@@ -9,7 +9,7 @@ export function UserMarker({
 }) {
   return (
     <AdvancedMarker position={position} title="you">
-      <RiAccountPinCircleFill size={64} />
+      <UserCircle size={64} />
     </AdvancedMarker>
   )
 }

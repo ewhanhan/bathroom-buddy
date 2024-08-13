@@ -1,5 +1,5 @@
 import { CldUploadWidget } from 'next-cloudinary'
-import { RiCamera2Fill } from 'react-icons/ri'
+import { Camera } from '@phosphor-icons/react/Camera'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { logger } from '@/lib/logger'
 import { Button } from '@/components/ui/button'
@@ -49,7 +49,7 @@ export function ControlPanel() {
               size="icon"
               onClick={handleOnClick}
             >
-              <RiCamera2Fill size={50} />
+              <Camera size={64} />
             </Button>
           )
         }}
