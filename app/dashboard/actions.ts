@@ -1,9 +1,9 @@
 'use server'
 
-import { logger } from '@/lib/logger'
+import { errorLogger } from '@/lib/logger'
 import type { ReviewWithPhotosPayload } from '@/types/api'
 
-export async function getWashroomReviewsWithPhotos() {
+export async function getWashroomReviewsWithPhotos(): Promise<ReviewWithPhotosPayload[]> {
   try {
     const res = await fetch(`${process.env.NEXTAUTH_URL}/api/reviews`, {
       next: {
@@ -11,14 +11,15 @@ export async function getWashroomReviewsWithPhotos() {
       },
     })
     if (!res.ok) {
-      throw new Error(`Failed to fetch washroom reviews: ${res.statusText}`)
+      errorLogger(res, 'Error fetching washroom reviews')
+      return []
     }
     const posts = await res.json()
 
-    return posts as ReviewWithPhotosPayload[]
+    return posts satisfies ReviewWithPhotosPayload[]
   }
   catch (error) {
-    logger(error, 'Error fetching washroom reviews')
-    throw error
+    errorLogger(error, 'Error fetching washroom reviews')
+    return []
   }
 }
