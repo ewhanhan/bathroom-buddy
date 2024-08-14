@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Header } from '@/components/header'
+import { QueryProvider } from '@/lib/react-query'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -26,12 +27,14 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <main className="flex h-dvh w-screen flex-col antialiased">
-          <Header />
-          {children}
-          <Analytics mode="production" />
-          <SpeedInsights />
-        </main>
+        <QueryProvider>
+          <main className="flex h-dvh w-screen flex-col antialiased">
+            <Header />
+            {children}
+            <Analytics mode="production" />
+            <SpeedInsights />
+          </main>
+        </QueryProvider>
       </body>
     </html>
   )
