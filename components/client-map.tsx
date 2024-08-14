@@ -68,7 +68,6 @@ export function ClientMap() {
       <MapControl position={ControlPosition.RIGHT_BOTTOM}>
         <DynamicControlPanel />
       </MapControl>
-      {/* {userLocation && <UserMarker position={userLocation} />} */}
       {userLocation && <ToiletMarker position={userLocation} />}
     </Map>
   )
