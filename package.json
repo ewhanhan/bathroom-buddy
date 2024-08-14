@@ -21,7 +21,6 @@
     "prisma-studio": "dotenv -e $npm_package_envFile -- prisma studio",
     "generate": "prisma generate",
     "lint": "eslint --cache .",
-    "lint-fix": "pnpm lint --fix",
     "lint:fix": "eslint . --fix",
     "check-types": "tsc --noEmit --pretty --incremental",
     "clean": "rimraf .next out",
