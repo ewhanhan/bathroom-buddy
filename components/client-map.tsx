@@ -6,7 +6,6 @@ import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { ToiletMarker } from '@/components/custom-pins'
 import { UNION_STATION } from '@/constant/map'
-import { useGeolocationPermission } from '@/hooks/useGeolocationPermission'
 import { errorLogger, logger } from '@/lib/logger'
 
 const DynamicControlPanel = dynamic(() => import('./control-panel').then(mod => mod.ControlPanel))
@@ -17,8 +16,7 @@ const geolocationOptions: PositionOptions = {
 
 export function ClientMap() {
   const map = useMap()
-  const { permissionState } = useGeolocationPermission()
-  const { error, latitude, loading: isLoadingGeolocation, longitude } = useGeolocation(geolocationOptions)
+  const { error: geolocationError, latitude, loading: isLoadingGeolocation, longitude } = useGeolocation(geolocationOptions)
   const [userLocation, setUserLocation] = useState<google.maps.LatLngLiteral | null>(null)
 
   useEffect(() => {
@@ -33,7 +31,7 @@ export function ClientMap() {
         lng: longitude,
       })
     }
-  }, [isLoadingGeolocation, latitude, longitude, permissionState])
+  }, [isLoadingGeolocation, latitude, longitude])
 
   useEffect(() => {
     if (!map) {
@@ -48,8 +46,8 @@ export function ClientMap() {
     map.panTo(userLocation)
   }, [map, userLocation])
 
-  if (error) {
-    errorLogger(error, 'Geolocation error')
+  if (geolocationError) {
+    errorLogger(geolocationError, 'Geolocation error')
     throw new Error('Geolocation error')
   }
 
