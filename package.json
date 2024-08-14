@@ -23,7 +23,7 @@
     "lint": "eslint --cache .",
     "lint-fix": "pnpm lint --fix",
     "lint:fix": "eslint . --fix",
-    "check-types": "tsc --noEmit --pretty --incremental false",
+    "check-types": "tsc --noEmit --pretty --incremental",
     "clean": "rimraf .next out",
     "postinstall": "pnpm generate",
     "prepare": "husky || true"
