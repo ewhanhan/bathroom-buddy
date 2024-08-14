@@ -5,14 +5,12 @@ import { ControlPosition, Map, MapControl, useMap } from '@vis.gl/react-google-m
 import { useEffect, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { ToiletMarker } from '@/components/custom-pins'
-import { UNION_STATION } from '@/constant/map'
+import { UNION_STATION, geolocationOptions } from '@/constant/'
 import { errorLogger, logger } from '@/lib/logger'
 
-const DynamicControlPanel = dynamic(() => import('./control-panel').then(mod => mod.ControlPanel))
-
-const geolocationOptions: PositionOptions = {
-  enableHighAccuracy: true,
-} satisfies PositionOptions
+const DynamicControlPanel = dynamic(
+  () => import('./control-panel').then(mod => mod.ControlPanel),
+)
 
 export function ClientMap() {
   const map = useMap()

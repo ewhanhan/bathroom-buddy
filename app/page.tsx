@@ -3,17 +3,23 @@ import dynamic from 'next/dynamic'
 import { auth } from 'auth'
 import { FullPageLoadingSpinner } from '@/components/loading-spinner'
 
-const DynamicClientMap = dynamic(() => import('../components/client-provider').then(mod => mod.ClientProvider), {
-  loading: () => (
-    <FullPageLoadingSpinner />
-  ),
-})
+const DynamicClientMap = dynamic(
+  () => import('../components/client-provider').then(mod => mod.ClientProvider),
+  {
+    loading: () => (
+      <FullPageLoadingSpinner />
+    ),
+  },
+)
 
-const DynamicReviewDialog = dynamic(() => import('../components/review-dialog').then(mod => mod.ReviewDialog), {
-  loading: () => (
-    <FullPageLoadingSpinner />
-  ),
-})
+const DynamicReviewDialog = dynamic(
+  () => import('../components/review-dialog').then(mod => mod.ReviewDialog),
+  {
+    loading: () => (
+      <FullPageLoadingSpinner />
+    ),
+  },
+)
 
 export default async function Index() {
   const session = await auth()
