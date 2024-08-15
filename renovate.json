@@ -5,7 +5,7 @@
   ],
   "dependencyDashboard": true,
   "extends": [
-    "config:base",
+    "config:recommended",
     "group:allNonMajor"
   ],
   "ignorePaths": [
@@ -30,8 +30,9 @@
   "rangeStrategy": "bump",
   "rebaseWhen": "conflicted",
   "schedule": [
-    "before 11am on Monday"
+    "every weekday"
   ],
+  "assignAutomerge":true,
   "semanticCommits": "enabled",
   "separateMajorMinor": true,
   "stabilityDays": 3,
