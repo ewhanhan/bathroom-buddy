@@ -1,12 +1,11 @@
 import '@/app/globals.css'
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { Header } from '@/components/header'
-import { QueryProvider } from '@/lib/react-query'
-
-const inter = Inter({ subsets: ['latin'] })
+import { Toaster } from '@/components/ui/toaster'
+import { inter } from '@/components/ui/fonts'
+import { ClientProviders } from '@/components/client-providers'
 
 export const metadata: Metadata = {
   description: 'Bathroom Buddy is your personal restroom companion, helping you find, review, and share clean and accessible restrooms in your area.',
@@ -27,14 +26,15 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <QueryProvider>
+        <ClientProviders>
           <main className="flex h-dvh w-screen flex-col antialiased">
             <Header />
             {children}
-            <Analytics mode="production" />
-            <SpeedInsights />
+            <Toaster />
           </main>
-        </QueryProvider>
+        </ClientProviders>
+        <Analytics mode="production" />
+        <SpeedInsights />
       </body>
     </html>
   )

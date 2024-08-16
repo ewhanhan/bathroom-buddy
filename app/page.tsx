@@ -4,7 +4,7 @@ import { auth } from 'auth'
 import { FullPageLoadingSpinner } from '@/components/loading-spinner'
 
 const DynamicClientMap = dynamic(
-  () => import('../components/client-provider').then(mod => mod.ClientProvider),
+  () => import('../components/client-map').then(mod => mod.ClientMap),
   {
     loading: () => (
       <FullPageLoadingSpinner />
