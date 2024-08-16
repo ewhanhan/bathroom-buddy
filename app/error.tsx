@@ -26,7 +26,7 @@ export default function Error({
           <h1 className="mt-8 text-4xl font-bold text-gray-800 md:text-6xl">
             Oops, something went wrong!
           </h1>
-          <Button variant="outline" onClick={reset} className="mt-8">
+          <Button aria-label="Refresh the page to try again after an error" variant="outline" onClick={reset} className="mt-8">
             Try again
           </Button>
         </div>

@@ -12,7 +12,12 @@ export function SignIn({
         await signIn(provider)
       }}
     >
-      <Button {...props}>Sign In</Button>
+      <Button
+        aria-label="Sign into your account"
+        {...props}
+      >
+        Sign In
+      </Button>
     </form>
   )
 }
@@ -26,7 +31,12 @@ export function SignOut(props: React.ComponentPropsWithRef<typeof Button>) {
       }}
       className="w-full"
     >
-      <Button variant="ghost" className="w-full p-0" {...props}>
+      <Button
+        aria-label="Sign out of your account"
+        variant="ghost"
+        className="w-full p-0"
+        {...props}
+      >
         Sign Out
       </Button>
     </form>

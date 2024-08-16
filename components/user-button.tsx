@@ -18,19 +18,27 @@ export async function UserButton() {
       </span>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="relative size-8 rounded-full">
+          <Button
+            aria-label="Toggle user dropdown menu"
+            variant="ghost"
+            className="relative size-8 rounded-full"
+          >
             <Avatar className="size-8">
               <AvatarImage
                 src={
                   session.user.image
                   ?? 'https://source.boringavatars.com/marble/120'
                 }
-                alt={session.user.name ?? ''}
+                alt={session.user.name ? `${session.user.name}'s avatar` : 'User avatar'}
               />
             </Avatar>
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56" align="end" forceMount>
+        <DropdownMenuContent
+          className="w-56"
+          align="end"
+          forceMount
+        >
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col space-y-1">
               <p className="text-sm font-medium leading-none">

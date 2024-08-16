@@ -232,12 +232,18 @@ export function ReviewDialog(
                 <Button
                   variant="ghost"
                   onClick={handleCancel}
+                  aria-label="Cancel review"
                 >
                   Cancel
                 </Button>
               </AlertDialogCancel>
               <AlertDialogAction asChild>
-                <Button type="submit">Submit Review</Button>
+                <Button
+                  type="submit"
+                  aria-label="Submit review"
+                >
+                  Submit Review
+                </Button>
               </AlertDialogAction>
             </AlertDialogFooter>
           </form>

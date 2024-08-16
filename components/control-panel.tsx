@@ -44,6 +44,7 @@ export function ControlPanel() {
               variant="outline"
               size="icon"
               onClick={handleOnClick}
+              aria-label="Upload or take photos to start review"
             >
               <Camera size={64} />
             </Button>
