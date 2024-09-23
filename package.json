@@ -72,7 +72,7 @@
     "@next/bundle-analyzer": "^14.2.13",
     "@svgr/webpack": "^8.1.0",
     "@tanstack/eslint-plugin-query": "^5.57.1",
-    "@types/google.maps": "^3.58.0",
+    "@types/google.maps": "^3.58.1",
     "@types/node": "^20.16.5",
     "@types/react": "^18.3.8",
     "@types/react-dom": "^18.3.0",
