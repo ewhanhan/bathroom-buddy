@@ -14,6 +14,10 @@
     {
       "matchPackageNames": ["eslint"],
       "allowedVersions": "8.x"
+    },
+    {
+      "matchUpdateTypes": ["minor", "patch"],
+      "automerge": true
     }
   ],
   "prConcurrentLimit": 5,
