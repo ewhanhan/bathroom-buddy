@@ -1,22 +1,38 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "baseBranches": ["main"],
+  "baseBranches": [
+    "main"
+  ],
   "dependencyDashboard": true,
-  "extends": ["config:recommended", "group:allNonMajor"],
-  "ignorePaths": ["packages/deprecated/**"],
-  "labels": ["dependencies"],
+  "extends": [
+    "config:recommended",
+    "group:allNonMajor"
+  ],
+  "ignorePaths": [
+    "packages/deprecated/**"
+  ],
+  "labels": [
+    "dependencies"
+  ],
   "packageRules": [
     {
       "groupName": "node",
-      "matchPackageNames": ["node"],
+      "matchPackageNames": [
+        "node"
+      ],
       "allowedVersions": "20.x"
     },
     {
-      "matchPackageNames": ["eslint"],
+      "matchPackageNames": [
+        "eslint"
+      ],
       "allowedVersions": "8.x"
     },
     {
-      "matchUpdateTypes": ["minor", "patch"],
+      "matchUpdateTypes": [
+        "minor",
+        "patch"
+      ],
       "automerge": true
     }
   ],
@@ -24,11 +40,13 @@
   "prHourlyLimit": 2,
   "rangeStrategy": "bump",
   "rebaseWhen": "conflicted",
-  "schedule": ["every weekday"],
+  "schedule": [
+    "every weekday"
+  ],
   "assignAutomerge": true,
   "semanticCommits": "enabled",
   "separateMajorMinor": true,
-  "stabilityDays": 3,
+  "minimumReleaseAge": "3 days",
   "timezone": "America/Toronto",
   "updatePinnedDependencies": false
 }
